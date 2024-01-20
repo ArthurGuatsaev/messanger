@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:messanger/const/extension.dart';
 
-import '../widgets/message/message.dart';
-import '../widgets/message/src/create_message.dart';
+import '../message/view/widgets/message/message.dart';
+import '../message/view/widgets/message/src/create_message.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});

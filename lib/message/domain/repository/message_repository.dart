@@ -4,6 +4,8 @@ abstract class MessageRepository {
 }
 
 class FirebaseMessage extends MessageRepository {
+
+  FirebaseMessage()
   @override
   Stream allMessages() {
     // TODO: implement allMessages
