@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:messanger/const/extension.dart';
 
+import '../message/domain/bloc/mess_bloc.dart';
 import '../message/view/widgets/message/message.dart';
 import '../message/view/widgets/message/src/create_message.dart';
 
@@ -24,8 +26,11 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
+    return BlocBuilder<MessBloc, MessState>(
+      builder: (context, state) {
+        final mes = state.chats[state.current] ?? [];
+        return Scaffold(
+          appBar: AppBar(
             leading: Row(
               children: [
                 const SizedBox(width: 10),
@@ -56,67 +61,63 @@ class _ChatPageState extends State<ChatPage> {
                 ),
               ],
             ),
-            leadingWidth: 300),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 100),
-                child: CustomScrollView(
-                  reverse: true,
-                  anchor: 0,
-                  controller: _controller,
-                  slivers: [
-                    SliverList.builder(
-                      itemCount: list.length,
-                      itemBuilder: (context, index) {
-                        final messages = list.reversed.toList();
-                        final m = messages[index];
-                        final isD = index == 0 ||
-                            messages[index - 1].date.chartD != m.date.chartD;
-                        return ReadyMessage(
-                          mine: m.mine,
-                          mes: m.message,
-                          isDate: isD,
-                          date: m.date.chartD,
-                        );
-                      },
-                    ),
-                  ],
+            leadingWidth: 300,
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 100),
+                  child: CustomScrollView(
+                    reverse: true,
+                    anchor: 0,
+                    controller: _controller,
+                    slivers: [
+                      SliverList.builder(
+                        itemCount: mes.length,
+                        itemBuilder: (context, index) {
+                          final messages = mes.reversed.toList();
+                          final m = messages[index];
+                          final isD = index == 0 ||
+                              messages[index - 1].date.chartD != m.date.chartD;
+                          return ReadyMessage(
+                            mine: m.mine,
+                            mes: m.message,
+                            isDate: isD,
+                            date: m.date.chartD,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const Padding(
+                const Padding(
                   padding: EdgeInsets.only(bottom: 40),
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: CreateMessage(),
-                  ))
-            ],
+                  ),
+                )
+              ],
+            ),
           ),
-        ));
+        );
+      },
+    );
   }
 }
 
-final list = [
-  DataObject(
-      message:
-          'hello my first normal messanger with dart languiges and flutter framework worker',
-      date: DateTime(2023, 1, 1, 10, 0),
-      mine: true),
-  DataObject(message: '2', date: DateTime(2023, 1, 1, 10, 0), mine: false),
-  DataObject(message: '2', date: DateTime(2023, 1, 1, 10, 0), mine: false),
-  DataObject(message: '3', date: DateTime(2023, 2, 1, 10, 0), mine: true),
-  DataObject(message: '4', date: DateTime(2023, 2, 1, 10, 0), mine: true),
-  DataObject(message: '5', date: DateTime(2024, 1, 18, 10, 0), mine: false),
-  DataObject(message: '5', date: DateTime(2024, 1, 19, 10, 0), mine: false),
-];
-
-class DataObject {
-  final String message;
-  final DateTime date;
-  final bool mine;
-
-  const DataObject(
-      {required this.message, required this.date, required this.mine});
-}
+// final list = [
+//   MessageModel(
+//       message:
+//           'hello my first normal messanger with dart languiges and flutter framework worker',
+//       date: DateTime(2023, 1, 1, 10, 0),
+//       mine: true),
+//   MessageModel(message: '2', date: DateTime(2023, 1, 1, 10, 0), mine: false),
+//   MessageModel(message: '2', date: DateTime(2023, 1, 1, 10, 0), mine: false),
+//   MessageModel(message: '3', date: DateTime(2023, 2, 1, 10, 0), mine: true),
+//   MessageModel(message: '4', date: DateTime(2023, 2, 1, 10, 0), mine: true),
+//   MessageModel(message: '5', date: DateTime(2024, 1, 18, 10, 0), mine: false),
+//   MessageModel(message: '5', date: DateTime(2024, 1, 19, 10, 0), mine: false),
+// ];

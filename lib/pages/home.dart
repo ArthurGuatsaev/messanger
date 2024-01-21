@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:messanger/const/extension.dart';
 import 'package:messanger/pages/chat.dart';
+
+import '../message/domain/bloc/mess_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -29,65 +32,77 @@ class _List extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverList.builder(
-        itemCount: 5,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ChatPage())),
-            child: Container(
-              height: 70,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: BoxDecoration(
-                border: Border(
-                  top: index == 0
-                      ? BorderSide(color: context.color.chartBottom)
-                      : BorderSide.none,
-                  bottom: BorderSide(color: context.color.chartDate),
-                ),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: CircleAvatar(
-                      radius: 28,
-                      backgroundColor: context.color.avatarBC,
-                      child: Center(
-                          child: Text('AG'.toUpperCase(),
-                              style: context.text.avatarStyle)),
+    return BlocBuilder<MessBloc, MessState>(
+      builder: (context, state) {
+        final users = state.chats.keys.toList();
+        return SliverList.builder(
+            itemCount: users.length,
+            itemBuilder: (context, index) {
+              final user = users[index];
+              final message =
+                  state.chats[user]!.isEmpty ? null : state.chats[user]!.last;
+              return GestureDetector(
+                onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const ChatPage())),
+                child: Container(
+                  height: 70,
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: index == 0
+                          ? BorderSide(color: context.color.chartBottom)
+                          : BorderSide.none,
+                      bottom: BorderSide(color: context.color.chartDate),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Column(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Greg Petrov',
-                        style: Theme.of(context).textTheme.bodyLarge,
+                      Center(
+                        child: CircleAvatar(
+                          radius: 28,
+                          backgroundColor: context.color.avatarBC,
+                          child: Center(
+                              child: Text(user.abrv.toUpperCase(),
+                                  style: context.text.avatarStyle)),
+                        ),
                       ),
-                      Row(
+                      const SizedBox(width: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Вы:',
-                            style: Theme.of(context).textTheme.bodySmall,
+                            message != null ? message.name : user.naming,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          Text(
-                            'ok:',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
+                          Row(
+                            children: [
+                              Text(
+                                message == null || message.mine ? 'Вы:' : '',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                              Text(
+                                message == null || message.mine
+                                    ? ''
+                                    : message.message,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ],
+                          )
                         ],
-                      )
+                      ),
+                      const Spacer(),
+                      Text('2 min ago', style: context.text.chartDate)
                     ],
                   ),
-                  const Spacer(),
-                  Text('2 min ago', style: context.text.chartDate)
-                ],
-              ),
-            ),
-          );
-        });
+                ),
+              );
+            });
+      },
+    );
   }
 }
 

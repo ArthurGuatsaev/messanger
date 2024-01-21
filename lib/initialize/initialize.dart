@@ -1,0 +1,19 @@
+import 'dart:developer';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:messanger/auth/domain/cubit/auth_cubit.dart';
+import 'package:messanger/auth/domain/user_repository.dart';
+import 'package:messanger/message/domain/repository/message_repository.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:messanger/message/domain/bloc/mess_bloc.dart';
+import '../../navigation/nav_manager.dart';
+import '../../navigation/router/information.dart';
+import '../../themes/theme.dart';
+import '../firebase_options.dart';
+
+part 'domain/dependencies.dart';
+part 'domain/initialize.dart';
+part 'domain/repo.dart';
+part 'view/home_app.dart';
+part 'view/loading_app.dart';

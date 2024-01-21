@@ -19,3 +19,20 @@ extension DateString on DateTime {
     return '$d.$m.$year';
   }
 }
+
+extension Abriviature on String {
+  String get abrv {
+    if (!contains(' ')) return substring(0, 1).toUpperCase();
+    final index = indexOf(' ');
+    final second = substring(index + 1, index + 2);
+    return '${substring(0, 1)}$second'.toUpperCase();
+  }
+}
+
+extension NameParce on String {
+  String get naming {
+    if (!contains('/')) return this;
+    final index = indexOf('/');
+    return substring(0, index);
+  }
+}

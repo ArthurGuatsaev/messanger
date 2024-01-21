@@ -1,20 +1,35 @@
+import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:messanger/pages/home.dart';
+import 'initialize/initialize.dart';
 
-import 'themes/theme.dart';
-
-void main() {
-  runApp(const StyleApp());
-}
-
-class StyleApp extends StatelessWidget {
-  const StyleApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: createLightTheme(),
-      home: const HomePage(),
-    );
-  }
+void main() async {
+  runZonedGuarded(
+    () async {
+      final initializationProgress =
+          ValueNotifier<({int progress, String message})>(
+        (progress: 0, message: ''),
+      );
+      runApp(
+        InitializationSplashScreen(
+          progress: initializationProgress,
+        ),
+      );
+      initializeApp(
+        onProgress: (progress, message) => initializationProgress.value =
+            (message: message, progress: progress),
+        onSuccess: (dependencies) {
+          runApp(
+            InheritedDependencies(
+              dependencies: dependencies,
+              child: const MyHomeApp(),
+            ),
+          );
+        },
+      );
+    },
+    (error, stack) {
+      log(stack.toString());
+    },
+  );
 }

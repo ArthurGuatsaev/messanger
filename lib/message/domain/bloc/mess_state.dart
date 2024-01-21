@@ -1,6 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'mess_bloc.dart';
 
-@immutable
-sealed class MessState {}
+class MessState {
+  final Map<String, List<MessageModel>> chats;
+  final String current;
 
-final class MessInitial extends MessState {}
+  const MessState({this.chats = const {}, this.current = ''});
+
+  MessState copyWith({
+    Map<String, List<MessageModel>>? chats,
+    String? current,
+  }) {
+    return MessState(
+      chats: chats ?? this.chats,
+      current: current ?? this.current,
+    );
+  }
+}
