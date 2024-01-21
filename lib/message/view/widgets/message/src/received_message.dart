@@ -19,7 +19,7 @@ class ReceivedMessage extends StatelessWidget {
         ),
         Flexible(
           child: Container(
-            margin: const EdgeInsets.only(bottom: 0, right: 50),
+            margin: const EdgeInsets.only(bottom: 0, right: 50, top: 10),
             decoration: BoxDecoration(
               color: context.color.otherMessage,
               borderRadius: const BorderRadius.only(

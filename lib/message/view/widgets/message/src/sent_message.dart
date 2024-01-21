@@ -12,7 +12,7 @@ class SentMessage extends StatelessWidget {
       children: [
         Flexible(
           child: Container(
-            margin: const EdgeInsets.only(bottom: 0, left: 50),
+            margin: const EdgeInsets.only(bottom: 0, left: 50, top: 10),
             decoration: BoxDecoration(
               color: context.color.myMessage,
               borderRadius: const BorderRadius.only(

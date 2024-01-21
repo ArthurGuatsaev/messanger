@@ -3,14 +3,24 @@ part of 'mess_bloc.dart';
 abstract class MessEvent {}
 
 class SendMessageEvent extends MessEvent {
-  final MessageModel mess;
-  final String me;
-  final String user;
+  final String mess;
 
-  SendMessageEvent({required this.mess, required this.me, required this.user});
+  SendMessageEvent({required this.mess});
 }
 
-class GetChatEvent extends MessEvent {}
+class GetChatEvent extends MessEvent {
+  final String collection;
+
+  GetChatEvent({required this.collection});
+}
+
+class GetUsersEvent extends MessEvent {}
+
+class SendAudioEvent extends MessEvent {
+  final File file;
+
+  SendAudioEvent({required this.file});
+}
 
 class ChangeCurrentEvent extends MessEvent {
   final String current;

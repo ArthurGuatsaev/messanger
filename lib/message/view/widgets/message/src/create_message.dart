@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:messanger/const/extension.dart';
+import 'package:messanger/message/domain/bloc/mess_bloc.dart';
 
 import 'sound/recorder.dart';
 
@@ -12,9 +14,13 @@ class CreateMessage extends StatefulWidget {
 
 class _CreateMessageState extends State<CreateMessage> {
   final notifier = ValueNotifier<bool>(false);
+  late final TextEditingController controller = TextEditingController();
   @override
   void initState() {
     notifier.addListener(() {
+      setState(() {});
+    });
+    controller.addListener(() {
       setState(() {});
     });
     super.initState();
@@ -23,6 +29,7 @@ class _CreateMessageState extends State<CreateMessage> {
   @override
   void dispose() {
     notifier.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -52,6 +59,7 @@ class _CreateMessageState extends State<CreateMessage> {
                   borderRadius: BorderRadius.circular(12),
                   color: context.color.chartBottom),
               child: TextField(
+                controller: controller,
                 decoration: InputDecoration(
                   hintText: 'Сообщение',
                   hintStyle: context.text.hintStyle,
@@ -60,7 +68,30 @@ class _CreateMessageState extends State<CreateMessage> {
                 ),
               ),
             ),
-          Positioned(right: 0, child: SoundRecorder(notifier: notifier)),
+          if (controller.text.isEmpty)
+            Positioned(right: 0, child: SoundRecorder(notifier: notifier)),
+          if (controller.text.isNotEmpty)
+            Positioned(
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  context
+                      .read<MessBloc>()
+                      .add(SendMessageEvent(mess: controller.text));
+                  controller.clear();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: context.color.chartBottom),
+                  height: 42,
+                  width: 42,
+                  child: const Center(
+                    child: Icon(Icons.send),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

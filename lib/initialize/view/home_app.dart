@@ -10,13 +10,12 @@ class MyHomeApp extends StatelessWidget {
         ?.dependencies;
     return MultiBlocProvider(
       providers: [
-        BlocProvider<MessBloc>(
-          create: (context) => MessBloc(repo: dependencies!.messageRepository)
-            ..add(GetChatEvent()),
-        ),
         BlocProvider<AuthCubit>(
-          create: (context) => AuthCubit(repo: dependencies!.userRepository),
+          create: (context) {
+            return dependencies!.auth;
+          },
         ),
+        BlocProvider<MessBloc>(create: (context) => dependencies!.mess),
       ],
       child: MyAppRouter(dependencies: dependencies),
     );

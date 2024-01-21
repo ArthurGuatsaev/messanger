@@ -30,10 +30,14 @@ class UserRepository {
   }
 
   Future<UserModel> setUser(String name) async {
-    final id = '$name/${DateTime.now().microsecond}';
+    final id = '$name${DateTime.now().microsecond}';
     await setKey(id);
     await firebase
         .collection('users')
+        .doc(id)
+        .set(UserModel(name: name, id: id).toMap());
+    await firebase
+        .collection('allusers')
         .doc(id)
         .set(UserModel(name: name, id: id).toMap());
     await firebase
@@ -41,7 +45,7 @@ class UserRepository {
         .doc(id)
         .collection('chats')
         .doc(AG.id)
-        .set(AGM.toMap());
+        .set(AGM);
     return UserModel(name: name, id: id);
   }
 }

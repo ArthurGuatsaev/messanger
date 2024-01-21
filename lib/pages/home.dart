@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:messanger/auth/domain/cubit/auth_cubit.dart';
 import 'package:messanger/const/extension.dart';
-import 'package:messanger/pages/chat.dart';
+import 'package:messanger/navigation/nav_manager.dart';
 
 import '../message/domain/bloc/mess_bloc.dart';
 
@@ -38,12 +39,17 @@ class _List extends StatelessWidget {
         return SliverList.builder(
             itemCount: users.length,
             itemBuilder: (context, index) {
-              final user = users[index];
-              final message =
-                  state.chats[user]!.isEmpty ? null : state.chats[user]!.last;
+              final user = state.correspondentName(users[index]);
+              final message = state.chats[users[index]]!.messages.isEmpty
+                  ? null
+                  : state.chats[users[index]]!.messages.last;
               return GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const ChatPage())),
+                onTap: () {
+                  context
+                      .read<MessBloc>()
+                      .add(ChangeCurrentEvent(current: users[index]));
+                  MyNavigatorManager.instance.pushChat();
+                },
                 child: Container(
                   height: 70,
                   padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -68,33 +74,42 @@ class _List extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            message != null ? message.name : user.naming,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                message == null || message.mine ? 'Вы:' : '',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                              Text(
-                                message == null || message.mine
-                                    ? ''
-                                    : message.message,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                            ],
-                          )
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              user,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            BlocBuilder<AuthCubit, AuthState>(
+                              builder: (context, auth) {
+                                final mine = auth.user.name == message?.name;
+                                return Row(
+                                  children: [
+                                    Text(
+                                      mine ? 'Вы:' : '',
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        message != null ? message.message : '',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            )
+                          ],
+                        ),
                       ),
-                      const Spacer(),
                       Text('2 min ago', style: context.text.chartDate)
                     ],
                   ),

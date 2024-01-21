@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:messanger/auth/domain/cubit/auth_cubit.dart';
 import 'package:messanger/const/extension.dart';
+import 'package:messanger/message/domain/bloc/mess_bloc.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({

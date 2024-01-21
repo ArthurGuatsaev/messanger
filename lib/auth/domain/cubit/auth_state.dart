@@ -2,16 +2,16 @@
 part of 'auth_cubit.dart';
 
 class AuthState {
-  final String name;
+  final UserModel user;
   AuthState({
-    this.name = 'unknown',
+    required this.user,
   });
 
   AuthState copyWith({
-    String? name,
+    UserModel? user,
   }) {
     return AuthState(
-      name: name ?? this.name,
+      user: user ?? this.user,
     );
   }
 }

@@ -30,11 +30,23 @@ final Map<String, _InitializationStep> _initializationSteps =
       dependencies.userRepository = userR;
     }
   },
-  'Message repository': (dependencies) async {
+  'Message repository': (dependencies) {
     final message = FirebaseMessage(me: dependencies.userRepository.user);
     dependencies.messageRepository = message;
   },
-  'Delegate initialization': (dependencies) async {
+  'Auth': (dependencies) {
+    final auth = AuthCubit(repo: dependencies.userRepository);
+    dependencies.auth = auth;
+  },
+  'Mess': (dependencies) {
+    final mess =
+        MessBloc(repo: dependencies.messageRepository, auth: dependencies.auth)
+          ..add(GetUsersEvent())
+          ..add(GetChatEvent(collection: dependencies.userRepository.user.id));
+
+    dependencies.mess = mess;
+  },
+  'Delegate initialization': (dependencies) {
     MyNavigatorManager.delegate.auth =
         dependencies.userRepository.user.name == 'unknown';
   },
