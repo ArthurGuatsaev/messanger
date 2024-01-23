@@ -91,6 +91,7 @@ class _ChatPageState extends State<ChatPage> {
                                 mes: m.message,
                                 isDate: isD,
                                 date: m.date.chartD,
+                                audio: m.audio,
                               );
                             },
                           );

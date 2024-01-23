@@ -27,6 +27,10 @@ class MessState {
 
   String correspondentName(String id) {
     if (users.isEmpty) return '';
-    return users.where((element) => element.id == id).first.name;
+    if (users.where((element) => element.id == id).isEmpty) {
+      return '';
+    } else {
+      return users.where((element) => element.id == id).first.name;
+    }
   }
 }

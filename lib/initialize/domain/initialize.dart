@@ -21,7 +21,7 @@ final Map<String, _InitializationStep> _initializationSteps =
     <String, _InitializationStep>{
   'User repository': (dependencies) async {
     final userR = UserRepository();
-    // await userR.reset();
+    await userR.reset();
     final key = await userR.getKey();
     if (key == null) {
       dependencies.userRepository = userR;

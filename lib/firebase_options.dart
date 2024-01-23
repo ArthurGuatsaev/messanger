@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAA_kuDrabVKiP6CyKopFhDutnAiv18qDM',
-    appId: '1:866729725731:web:decd299e494b6c3942c696',
-    messagingSenderId: '866729725731',
-    projectId: 'messanger-66f89',
-    authDomain: 'messanger-66f89.firebaseapp.com',
-    storageBucket: 'messanger-66f89.appspot.com',
-    measurementId: 'G-G1RJ01G4ND',
+    apiKey: 'AIzaSyBJ_ukzi_MXkHHiws5k57OAG8K2MpwIGDA',
+    appId: '1:434548691820:web:846137eaa36807429f1949',
+    messagingSenderId: '434548691820',
+    projectId: 'mymessangerapp-423de',
+    authDomain: 'mymessangerapp-423de.firebaseapp.com',
+    storageBucket: 'mymessangerapp-423de.appspot.com',
+    measurementId: 'G-W297Z5KFGQ',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC49B8zsmGXREOpihgJU4-ZRaMPYJW0-N8',
-    appId: '1:866729725731:android:d572353bcba3584042c696',
-    messagingSenderId: '866729725731',
-    projectId: 'messanger-66f89',
-    storageBucket: 'messanger-66f89.appspot.com',
+    apiKey: 'AIzaSyCkX-_mxw9BazkJRfPQHh6md8y8vSBkUcQ',
+    appId: '1:434548691820:android:0dd4004de08213609f1949',
+    messagingSenderId: '434548691820',
+    projectId: 'mymessangerapp-423de',
+    storageBucket: 'mymessangerapp-423de.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD4Zq9Gel0r93Bh93r00Zlenwswz5hl_TM',
-    appId: '1:866729725731:ios:adc059ac8967eef742c696',
-    messagingSenderId: '866729725731',
-    projectId: 'messanger-66f89',
-    storageBucket: 'messanger-66f89.appspot.com',
+    apiKey: 'AIzaSyCsCbbuRX_mCGyF6ZVkS58joWYtnhz72Tg',
+    appId: '1:434548691820:ios:0d942a0f2c40b6909f1949',
+    messagingSenderId: '434548691820',
+    projectId: 'mymessangerapp-423de',
+    storageBucket: 'mymessangerapp-423de.appspot.com',
     iosBundleId: 'com.example.messanger',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD4Zq9Gel0r93Bh93r00Zlenwswz5hl_TM',
-    appId: '1:866729725731:ios:c42234398889fe4e42c696',
-    messagingSenderId: '866729725731',
-    projectId: 'messanger-66f89',
-    storageBucket: 'messanger-66f89.appspot.com',
+    apiKey: 'AIzaSyCsCbbuRX_mCGyF6ZVkS58joWYtnhz72Tg',
+    appId: '1:434548691820:ios:fa3bb7f173f2cc489f1949',
+    messagingSenderId: '434548691820',
+    projectId: 'mymessangerapp-423de',
+    storageBucket: 'mymessangerapp-423de.appspot.com',
     iosBundleId: 'com.example.messanger.RunnerTests',
   );
 }

@@ -1,24 +1,45 @@
 part of '../message.dart';
 
-class ReadyMessage extends StatelessWidget {
+class ReadyMessage extends StatefulWidget {
   final bool mine;
   final String mes;
   final bool isDate;
   final String date;
+  final String? audio;
   const ReadyMessage({
     super.key,
     required this.mine,
     required this.mes,
     required this.date,
     required this.isDate,
+    this.audio,
   });
+
+  @override
+  State<ReadyMessage> createState() => _ReadyMessageState();
+}
+
+class _ReadyMessageState extends State<ReadyMessage> {
+  final FlutterSoundPlayer myPlayer = FlutterSoundPlayer();
   @override
   Widget build(BuildContext context) {
+    if (widget.audio != null) {
+      return Column(
+        children: [
+          if (widget.isDate) DateWidget(date: widget.date),
+          PlayerMessage(
+            mine: widget.mine,
+            myPlayer: myPlayer,
+            audio: widget.audio!,
+          ),
+        ],
+      );
+    }
     return Column(
       children: [
-        if (isDate) DateWidget(date: date),
-        if (mine) SentMessage(message: mes),
-        if (!mine) ReceivedMessage(message: mes),
+        if (widget.isDate) DateWidget(date: widget.date),
+        if (widget.mine) SentMessage(message: widget.mes),
+        if (!widget.mine) ReceivedMessage(message: widget.mes),
       ],
     );
   }

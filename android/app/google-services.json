@@ -1,13 +1,51 @@
 {
   "project_info": {
-    "project_number": "866729725731",
-    "project_id": "messanger-66f89",
-    "storage_bucket": "messanger-66f89.appspot.com"
+    "project_number": "434548691820",
+    "project_id": "mymessangerapp-423de",
+    "storage_bucket": "mymessangerapp-423de.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:866729725731:android:d572353bcba3584042c696",
+        "mobilesdk_app_id": "1:434548691820:android:52c4394f0427ae4b9f1949",
+        "android_client_info": {
+          "package_name": "com.example.flutter_messanger"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkX-_mxw9BazkJRfPQHh6md8y8vSBkUcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434548691820:android:79819128ccf44d3e9f1949",
+        "android_client_info": {
+          "package_name": "com.example.flutter_router"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkX-_mxw9BazkJRfPQHh6md8y8vSBkUcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434548691820:android:0dd4004de08213609f1949",
         "android_client_info": {
           "package_name": "com.example.messanger"
         }
@@ -15,7 +53,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC49B8zsmGXREOpihgJU4-ZRaMPYJW0-N8"
+          "current_key": "AIzaSyCkX-_mxw9BazkJRfPQHh6md8y8vSBkUcQ"
         }
       ],
       "services": {

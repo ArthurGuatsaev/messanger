@@ -22,6 +22,7 @@ extension DateString on DateTime {
 
 extension Abriviature on String {
   String get abrv {
+    if (isEmpty) return '';
     if (!contains(' ')) return substring(0, 1).toUpperCase();
     final index = indexOf(' ');
     final second = substring(index + 1, index + 2);

@@ -48,9 +48,7 @@ class MessBloc extends Bloc<MessEvent, MessState> {
   sendMessage(SendMessageEvent event, Emitter<MessState> emit) async {
     if (repo is! FirebaseMessage) return;
     final message = MessageModel(
-        message: event.mess,
-        date: DateTime.now(),
-        name: (repo as FirebaseMessage).me.name);
+        message: event.mess, date: DateTime.now(), name: auth.state.user.name);
 
     final map = [...state.curList.messages, message];
     final chat = ChatModel(messages: map);
