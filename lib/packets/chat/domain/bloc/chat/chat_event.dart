@@ -10,4 +10,4 @@ class SentMessageEvent extends ChatEvent {
   SentMessageEvent({this.text, required this.author, required this.user});
 }
 
-class RecieveMessage extends ChatEvent {}
+class RecieveMessageEvent extends ChatEvent {}

@@ -29,15 +29,17 @@ class FirebaseChatRepository extends BaseChatRepository {
     if (id == null) return;
     final collection = db.doc(id).collection('chats');
     final users = await collection.get();
-    Map<String, Stream<MessageModel>> res = {};
+    Map<String, Stream<List<MessageModel>>> res = {};
     for (var i in users.docs) {
       final name = i.data()['name'];
       final lastName = i.data()['lastName'];
       final value = collection.doc(i.id).snapshots().transform(
               StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
-                  MessageModel>.fromHandlers(
-            handleData: (data, sink) =>
-                sink.add(MessageModel.fromMap(data.data()!)),
+                  List<MessageModel>>.fromHandlers(
+            handleData: (data, sink) => sink.add(
+                (data.data() as List<Map<String, dynamic>>)
+                    .map((e) => MessageModel.fromMap(e))
+                    .toList()),
           ));
       res['$name $lastName'] = value;
     }

@@ -18,4 +18,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     if (event.text != null) message.text = event.text;
     await _chatR.sentMessage(event.user, event.author, message);
   }
+
+  recievMessage(RecieveMessageEvent event, Emitter<ChatState> emit) async {
+    _chatR.myChats?.entries.map((e) {
+      emit.forEach(e.value, onData: (data) {
+        final chat = {...state.chats};
+        chat[e.key] = data;
+        return state.copyWith(chats: chat);
+      });
+    });
+  }
 }
