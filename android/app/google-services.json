@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "992590573954",
+    "project_id": "notification-ae472",
+    "storage_bucket": "notification-ae472.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992590573954:android:12c7b2f6cd5fa4b6e25f9b",
+        "android_client_info": {
+          "package_name": "com.example.messanger"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMWXD-cTCxx57exhlnJUjhBonT6KAIsmk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

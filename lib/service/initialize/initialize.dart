@@ -1,7 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:messanger/service/chat/data/repositories/chat/firebase/chat_repository.dart';
+import 'package:messanger/service/chat/data/repositories/user/moc/user_repository.dart';
+import 'package:messanger/service/chat/domain/repositories/base_chat_repository.dart';
+import 'package:messanger/service/chat/domain/repositories/base_user_repository.dart';
+import '../../firebase_options.dart';
+import '../chat/data/repositories/user/local/shared_pref/user_repository.dart';
 import '../navigation/router.dart';
 import '../themes/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

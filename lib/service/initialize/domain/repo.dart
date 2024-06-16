@@ -12,7 +12,11 @@ Future<Dependencies> initializeApp({
     final stopWatch = Stopwatch()..start();
     try {
       buinding = WidgetsFlutterBinding.ensureInitialized()..deferFirstFrame();
-      if (isTesting != true) await Firebase.initializeApp();
+      if (isTesting != true) {
+        await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        );
+      }
       final dependencies = await $initializeDependencies(
               onProgress: onProgress, isTesting: isTesting)
           .timeout(const Duration(minutes: 5));

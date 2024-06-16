@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:messanger/service/user/domain/models/user_model.dart';
+import 'package:messanger/service/chat/models/user_model.dart';
 
-abstract class BaseLocalUserRepository {
+abstract class BaseUserRepository {
   StreamController<int>? errorController;
   UserModel? user;
   Future<void> setUser(String name, String lastName);
