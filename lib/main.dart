@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'service/initialize/initialize.dart';
-import 'service/initialize/view/error_app.dart';
+import 'packets/initialize/initialize.dart';
+import 'packets/initialize/view/error_app.dart';
 
 void main() async {
   runZonedGuarded(
