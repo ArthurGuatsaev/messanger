@@ -1,6 +1,6 @@
-import 'package:messanger/packets/chat/domain/repositories/base_user_repository.dart';
+import 'package:messanger/packets/chat/domain/repositories/base_auth_repository.dart';
 
-class MocUserRepository extends BaseUserRepository {
+class MocAuthRepository extends BaseAuthRepository {
   @override
   Future<void> getUser() async {
     // final def = UserModel(id: 'id', name: 'name', lastName: 'lastName');

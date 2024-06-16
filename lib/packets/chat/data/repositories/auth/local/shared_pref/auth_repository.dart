@@ -1,8 +1,8 @@
 import 'package:messanger/packets/chat/domain/models/user_model.dart';
-import 'package:messanger/packets/chat/domain/repositories/base_user_repository.dart';
+import 'package:messanger/packets/chat/domain/repositories/base_auth_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedUserRepository extends BaseUserRepository {
+class SharedAuthRepository extends BaseAuthRepository {
   SharedPreferences? _shared;
   Future<SharedPreferences> get shared async {
     if (_shared != null) return _shared!;

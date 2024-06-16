@@ -1,8 +1,8 @@
-part of 'user_bloc.dart';
+part of 'auth_bloc.dart';
 
-sealed class UserEvent {}
+sealed class AuthEvent {}
 
-class SetUserEvent extends UserEvent {
+class SetUserEvent extends AuthEvent {
   final String name;
   final String lastName;
 

@@ -1,10 +1,10 @@
-import 'dart:async';
-
-import 'package:messanger/packets/chat/domain/models/user_model.dart';
+import '../models/user_model.dart';
 
 abstract class BaseUserRepository {
-  StreamController<int>? errorController;
-  UserModel? user;
-  Future<void> setUser(String name, String lastName);
-  Future<void> getUser();
+  String? myId;
+  Stream<List<String>>? myUsers;
+  Future<void> addUser(UserModel user);
+  void getMyUsers();
+  Future<Map<String, UserModel>> getAllUsers();
+  Future<void> saveMyUser(UserModel user, UserModel author);
 }

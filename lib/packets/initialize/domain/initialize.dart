@@ -20,22 +20,29 @@ typedef _InitializationStep = FutureOr<void> Function(
     MutableDependencies dependencies, bool? isT);
 final Map<String, _InitializationStep> _initializationSteps =
     <String, _InitializationStep>{
-  'users initialization': (dependencies, isT) async {
+  'Auth initialization': (dependencies, isT) async {
     final errorController = StreamController<int>();
-    BaseUserRepository userR = SharedUserRepository();
-    if (isT == true) userR = MocUserRepository();
+    BaseAuthRepository userR = SharedAuthRepository();
+    if (isT == true) userR = MocAuthRepository();
     userR.errorController = errorController;
+    dependencies.aR = userR;
+  },
+  'User initialization': (dependencies, isT) async {
+    BaseUserRepository userR = FirebaseUserRepository();
+    if (isT == true) return;
+    final authR = dependencies.aR;
+    userR.myId = authR.user?.id;
+    if (authR.user != null) userR.getMyUsers();
     dependencies.uR = userR;
   },
-  'chats initialization': (dependencies, isT) async {
+  'Chats initialization': (dependencies, isT) async {
     BaseChatRepository chatsR = FirebaseChatRepository();
     if (isT == true) return;
-    final userR = dependencies.uR;
+    final userR = dependencies.aR;
     chatsR.errorController = userR.errorController;
-    chatsR.getMyChats(userR.user?.id);
     dependencies.cR = chatsR;
   },
   'navigation': (dependencies, isT) {
-    MyRouterDelegate.instance.param['isAuth'] = dependencies.uR.user != null;
+    MyRouterDelegate.instance.param['isAuth'] = dependencies.aR.user != null;
   }
 };

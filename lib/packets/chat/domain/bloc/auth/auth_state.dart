@@ -1,16 +1,16 @@
-part of 'user_bloc.dart';
+part of 'auth_bloc.dart';
 
-class UserState {
+class AuthState {
   final UserModel? user;
   final UserStatus status;
 
-  UserState({this.user})
+  AuthState({this.user})
       : status = user == null ? UserStatus.non : UserStatus.success;
-  UserState copyWith({
+  AuthState copyWith({
     UserModel? user,
     UserStatus? status,
   }) {
-    return UserState(user: user ?? this.user);
+    return AuthState(user: user ?? this.user);
   }
 }
 

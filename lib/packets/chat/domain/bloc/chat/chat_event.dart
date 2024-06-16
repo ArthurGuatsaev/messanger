@@ -10,4 +10,14 @@ class SentMessageEvent extends ChatEvent {
   SentMessageEvent({this.text, required this.author, required this.user});
 }
 
-class RecieveMessageEvent extends ChatEvent {}
+class RecieveMessageEvent extends ChatEvent {
+  final List<String> users;
+
+  RecieveMessageEvent({required this.users});
+}
+
+class AddUserEvent extends ChatEvent {
+  final UserModel user;
+
+  AddUserEvent({required this.user});
+}

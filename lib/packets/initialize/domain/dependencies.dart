@@ -1,8 +1,9 @@
 part of '../initialize.dart';
 
 abstract interface class Dependencies {
-  abstract final BaseUserRepository uR;
+  abstract final BaseAuthRepository aR;
   abstract final BaseChatRepository cR;
+  abstract final BaseUserRepository uR;
   final Map<String, Object> context = {};
 }
 
@@ -10,13 +11,16 @@ class MutableDependencies implements Dependencies {
   @override
   final Map<String, Object> context = {};
   @override
-  late BaseUserRepository uR;
+  late BaseAuthRepository aR;
   @override
   late BaseChatRepository cR;
+  @override
+  late BaseUserRepository uR;
 
   Dependencies freeze() => UnmutableDependencies(
-        uR: uR,
+        aR: aR,
         cR: cR,
+        uR: uR,
         context: context,
       );
 }
@@ -25,12 +29,15 @@ final class UnmutableDependencies implements Dependencies {
   @override
   final BaseChatRepository cR;
   @override
+  final BaseAuthRepository aR;
+  @override
   final BaseUserRepository uR;
   @override
   final Map<String, Object> context;
   const UnmutableDependencies({
-    required this.uR,
+    required this.aR,
     required this.cR,
+    required this.uR,
     required this.context,
   });
 }

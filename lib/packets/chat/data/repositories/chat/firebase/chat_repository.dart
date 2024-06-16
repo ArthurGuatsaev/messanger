@@ -7,17 +7,15 @@ import 'package:messanger/packets/chat/domain/models/user_model.dart';
 
 class FirebaseChatRepository extends BaseChatRepository {
   final db = FirebaseFirestore.instance.collection('users');
-  @override
-  Future<void> addUser(UserModel user) async {
-    await db.doc(user.id).set(user.toMap());
-  }
+
+  /// добавляет usera после регистрации
 
   @override
   Future<void> sentMessage(
       UserModel user, UserModel author, MessageModel mess) async {
     final docUser = db.doc(user.id).collection('chats').doc(author.id);
-    final authorUser = db.doc(author.id).collection('chats').doc(user.id);
-    [docUser, authorUser].map((e) async {
+    final aut = db.doc(author.id).collection('chats').doc(user.id);
+    [docUser, aut].map((e) async {
       await e.update({
         "messages": FieldValue.arrayUnion([mess.toMap()])
       }).onError((error, stackTrace) => errorController?.add(111));
@@ -25,15 +23,13 @@ class FirebaseChatRepository extends BaseChatRepository {
   }
 
   @override
-  Future<void> getMyChats(String? id) async {
-    if (id == null) return;
+  Future<void> resieveMessage(
+      List<String> users, String id, Map<String, UserModel> allUsers) async {
     final collection = db.doc(id).collection('chats');
-    final users = await collection.get();
     Map<String, Stream<List<MessageModel>>> res = {};
-    for (var i in users.docs) {
-      final name = i.data()['name'];
-      final lastName = i.data()['lastName'];
-      final value = collection.doc(i.id).snapshots().transform(
+    for (var i in users) {
+      final user = allUsers[i];
+      final value = collection.doc(user?.id).snapshots().transform(
               StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
                   List<MessageModel>>.fromHandlers(
             handleData: (data, sink) => sink.add(
@@ -41,7 +37,7 @@ class FirebaseChatRepository extends BaseChatRepository {
                     .map((e) => MessageModel.fromMap(e))
                     .toList()),
           ));
-      res['$name $lastName'] = value;
+      res['${user?.name} ${user?.lastName}'] = value;
     }
     myChats = res;
   }

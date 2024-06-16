@@ -6,7 +6,7 @@ import 'package:messanger/packets/chat/domain/models/user_model.dart';
 abstract class BaseChatRepository {
   StreamController<int>? errorController;
   Map<String, Stream<List<MessageModel>>>? myChats;
-  Future<void> addUser(UserModel user);
   Future<void> sentMessage(UserModel user, UserModel author, MessageModel mess);
-  Future<void> getMyChats(String? id);
+  Future<void> resieveMessage(
+      List<String> users, String id, Map<String, UserModel> allUsers);
 }
