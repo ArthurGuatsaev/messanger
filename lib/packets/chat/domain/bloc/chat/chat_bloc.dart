@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:messanger/packets/chat/domain/models/message_model.dart';
 import 'package:messanger/packets/chat/domain/models/user_model.dart';
@@ -10,12 +12,13 @@ part 'chat_state.dart';
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final BaseChatRepository _chatR;
   final BaseUserRepository _userR;
+  StreamSubscription? subscription;
   ChatBloc(
       {required BaseChatRepository chatR, required BaseUserRepository userR})
       : _chatR = chatR,
         _userR = userR,
         super(ChatState()) {
-    _userR.myUsers?.listen(
+    subscription = _userR.myUsers?.listen(
       (event) async {
         _chatR.resieveMessage(
             event, _userR.myId!, (await _userR.getAllUsers()));
@@ -46,5 +49,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   addUser(AddUserEvent event, Emitter<ChatState> emit) async {
     await _userR.addUser(event.user);
     _userR.getMyUsers();
+  }
+
+  @override
+  Future<void> close() {
+    subscription?.cancel();
+    return super.close();
   }
 }

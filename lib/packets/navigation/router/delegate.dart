@@ -15,6 +15,8 @@ class MyRouterDelegate extends RouterDelegate<MyNavigationState>
       key: navigatorKey,
       pages: [
         if (myNS == null) const MaterialPage(child: Scaffold()),
+        if (myNS?.home == true) const MaterialPage(child: HomePage()),
+        if (myNS?.auth == true) const MaterialPage(child: AuthPage()),
       ],
       onPopPage: onPop,
     );

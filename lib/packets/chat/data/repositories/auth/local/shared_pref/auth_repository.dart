@@ -18,7 +18,7 @@ class SharedAuthRepository extends BaseAuthRepository {
 
   @override
   Future<void> setUser(String name, String lastName) async {
-    const id = DateTime.fromMillisecondsSinceEpoch;
+    final id = DateTime.now().millisecondsSinceEpoch;
     (await shared).setString('saved_user', '${name}_${lastName}_$id');
   }
 }

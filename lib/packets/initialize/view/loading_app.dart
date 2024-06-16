@@ -34,9 +34,6 @@ class _InitializationSplashScreenState
           body: Column(
             children: [
               const SizedBox(height: 250),
-              Center(
-                  child:
-                      Image.asset('assets/logo.png', height: 242, width: 393)),
               const SizedBox(height: 100),
               const CircularProgressIndicator.adaptive(
                 backgroundColor: Colors.white,

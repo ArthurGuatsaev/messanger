@@ -12,6 +12,8 @@ class AuthState {
   }) {
     return AuthState(user: user ?? this.user);
   }
+
+  bool get isSuccess => status == UserStatus.success;
 }
 
 enum UserStatus {

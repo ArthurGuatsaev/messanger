@@ -22,10 +22,11 @@ final Map<String, _InitializationStep> _initializationSteps =
     <String, _InitializationStep>{
   'Auth initialization': (dependencies, isT) async {
     final errorController = StreamController<int>();
-    BaseAuthRepository userR = SharedAuthRepository();
-    if (isT == true) userR = MocAuthRepository();
-    userR.errorController = errorController;
-    dependencies.aR = userR;
+    BaseAuthRepository authR = SharedAuthRepository();
+    if (isT == true) authR = MocAuthRepository();
+    authR.errorController = errorController;
+    await authR.getUser();
+    dependencies.aR = authR;
   },
   'User initialization': (dependencies, isT) async {
     BaseUserRepository userR = FirebaseUserRepository();
