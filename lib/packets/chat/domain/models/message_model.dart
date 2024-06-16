@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'user_model.dart';
 
 class MessageModel {
-  final String? text;
-  final String? image;
+  String? text;
+  String? image;
   final DateTime date;
   final UserModel author;
   MessageModel({

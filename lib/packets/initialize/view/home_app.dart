@@ -10,10 +10,10 @@ class MyHomeApp extends StatelessWidget {
         ?.dependencies;
     return MultiBlocProvider(
       providers: [
-        // BlocProvider(
-        //   create: (context) => VpnBloc(cR: dp!.cR),
-        //   lazy: false,
-        // ),
+        BlocProvider(
+          create: (context) => UserBloc(userR: dp!.uR),
+          lazy: false,
+        ),
       ],
       child: MyAppRouter(dependencies: dp),
     );

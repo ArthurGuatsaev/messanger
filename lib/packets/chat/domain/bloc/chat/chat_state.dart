@@ -1,6 +1,12 @@
 part of 'chat_bloc.dart';
 
-@immutable
-sealed class ChatState {}
+class ChatState {
+  final Map<String, List<MessageModel>> chats;
 
-final class ChatInitial extends ChatState {}
+  ChatState({this.chats = const {}});
+  ChatState copyWith({
+    Map<String, List<MessageModel>>? chats,
+  }) {
+    return ChatState(chats: chats ?? this.chats);
+  }
+}
