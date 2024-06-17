@@ -15,4 +15,10 @@ class MyNavigatorManager {
     delegate.myNS = MyNavigationState.home();
     delegate.notify();
   }
+
+  void pushChat(Map<String, dynamic> user) {
+    delegate.param['user'] = user;
+    delegate.myNS = MyNavigationState.chat();
+    delegate.notify();
+  }
 }

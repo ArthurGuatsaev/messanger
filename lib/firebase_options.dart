@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,16 +49,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCj4XRPZWPib5B09tj1W40y6Gm2iTOzokk',
-    appId: '1:992590573954:web:29b05f1b20545c0be25f9b',
-    messagingSenderId: '992590573954',
-    projectId: 'notification-ae472',
-    authDomain: 'notification-ae472.firebaseapp.com',
-    storageBucket: 'notification-ae472.appspot.com',
-    measurementId: 'G-VR3SZJQX89',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCMWXD-cTCxx57exhlnJUjhBonT6KAIsmk',
     appId: '1:992590573954:android:12c7b2f6cd5fa4b6e25f9b',
@@ -68,14 +64,5 @@ class DefaultFirebaseOptions {
     projectId: 'notification-ae472',
     storageBucket: 'notification-ae472.appspot.com',
     iosBundleId: 'com.example.messanger',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCz_68zqfAHzx4wlz7gLGiyJaMYOvQB9nY',
-    appId: '1:992590573954:ios:4de4881eb4443189e25f9b',
-    messagingSenderId: '992590573954',
-    projectId: 'notification-ae472',
-    storageBucket: 'notification-ae472.appspot.com',
-    iosBundleId: 'com.example.messanger.RunnerTests',
   );
 }

@@ -20,35 +20,46 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         super(ChatState()) {
     subscription = _userR.myUsers?.listen(
       (event) async {
-        _chatR.resieveMessage(
-            event, _userR.myId!, (await _userR.getAllUsers()));
+        _chatR.resieveMessage(event.values.toList(), _userR.me!.id);
         add(RecieveMessageEvent(users: event));
       },
     );
     on<SentMessageEvent>(sentMessage);
     on<RecieveMessageEvent>(recievMessage);
     on<AddUserEvent>(addUser);
+    on<SetAllUsers>(getAllUsers);
   }
   sentMessage(SentMessageEvent event, Emitter<ChatState> emit) async {
-    final message = MessageModel(date: DateTime.now(), author: event.author);
+    final date = DateTime.now();
+    final message = MessageModel(
+        date: date, author: _userR.me!, id: '${date.millisecondsSinceEpoch}');
     if (event.text != null) message.text = event.text;
-    await _chatR.sentMessage(event.user, event.author, message);
-    await _userR.saveMyUser(event.user, event.author);
+    await _chatR.sentMessage(
+        UserModel.fromMap(event.user!), _userR.me!, message);
+    await _userR.saveChatUser(UserModel.fromMap(event.user!), _userR.me!);
   }
 
   recievMessage(RecieveMessageEvent event, Emitter<ChatState> emit) async {
-    _chatR.myChats?.entries.map((e) {
-      emit.forEach(e.value, onData: (data) {
+    emit(state.copyWith(chatUsers: event.users));
+    for (var stream in _chatR.myChats!.entries) {
+      return await emit.forEach(stream.value, onData: (data) {
         final chat = {...state.chats};
-        chat[e.key] = data;
+        chat[stream.key] = data;
         return state.copyWith(chats: chat);
       });
-    });
+    }
   }
 
   addUser(AddUserEvent event, Emitter<ChatState> emit) async {
     await _userR.addUser(event.user);
-    _userR.getMyUsers();
+    _userR.setChatUserStream();
+  }
+
+  getAllUsers(SetAllUsers event, Emitter<ChatState> emit) async {
+    if (event.empty == true) return emit(state.copyWith(allUsers: {}));
+    if (state.allUsers.isNotEmpty) return;
+    final users = await _userR.getAllUsers();
+    emit(state.copyWith(allUsers: users));
   }
 
   @override

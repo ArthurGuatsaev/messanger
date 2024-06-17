@@ -11,12 +11,15 @@ class MyRouterDelegate extends RouterDelegate<MyNavigationState>
   MyRouterDelegate._();
   @override
   Widget build(BuildContext context) {
+    final user = param['user'] as Map<String, dynamic>?;
     return Navigator(
       key: navigatorKey,
       pages: [
         if (myNS == null) const MaterialPage(child: Scaffold()),
         if (myNS?.home == true) const MaterialPage(child: HomePage()),
         if (myNS?.auth == true) const MaterialPage(child: AuthPage()),
+        if (myNS?.chat == true)
+          MaterialPage(child: ChatPage(user: user), name: 'chat'),
       ],
       onPopPage: onPop,
     );
@@ -41,7 +44,7 @@ class MyRouterDelegate extends RouterDelegate<MyNavigationState>
 
   bool onPop(Route<dynamic> route, dynamic result) {
     switch (route.settings.name) {
-      case 'sub':
+      case 'chat':
         myNS = MyNavigationState.home();
         notifyListeners();
     }

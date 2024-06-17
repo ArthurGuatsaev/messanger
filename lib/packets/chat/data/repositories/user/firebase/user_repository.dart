@@ -9,42 +9,42 @@ class FirebaseUserRepository extends BaseUserRepository {
   @override
   Future<void> addUser(UserModel user) async {
     await db.doc(user.id).set(user.toMap());
-    await db.doc('all_users').update({
-      "messages": FieldValue.arrayUnion([user.toMap()])
-    });
+    await db
+        .doc('all_users')
+        .set(user.toMapForUsers(), SetOptions(merge: true));
   }
 
   @override
-  void getMyUsers() {
-    final snap = db.doc(myId).collection('chats').doc('chat_users').snapshots();
+  void setChatUserStream() {
+    final snap =
+        db.doc(me?.id).collection('chats').doc('chat_users').snapshots();
     myUsers = snap.transform(StreamTransformer<
-        DocumentSnapshot<Map<String, dynamic>>, List<String>>.fromHandlers(
-      handleData: (data, sink) => sink.add(
-          (data.data()!['users'] as List).map((e) => e as String).toList()),
+        DocumentSnapshot<Map<String, dynamic>>,
+        Map<String, UserModel>>.fromHandlers(
+      handleData: (data, sink) {
+        if (data.data() != null) {
+          final us =
+              data.data()?.map((k, v) => MapEntry(k, UserModel.fromMap(v)));
+          sink.add(us!);
+        }
+      },
     ));
   }
 
   @override
   Future<Map<String, UserModel>> getAllUsers() async {
     final doc = await db.doc('all_users').get();
-    final users = doc.data()?['users'] as List<Map<String, dynamic>>;
-    final rs = <String, UserModel>{};
-    for (var i in users) {
-      final user = UserModel.fromMap(i);
-      rs[user.id] = user;
-    }
-    return rs;
+    final users = doc.data();
+    return users?.map((k, v) => MapEntry(k, UserModel.fromMap(v))) ?? {};
   }
 
   @override
-  Future<void> saveMyUser(UserModel user, UserModel author) async {
+  Future<void> saveChatUser(UserModel user, UserModel author) async {
     final whoom = db.doc(user.id).collection('chats');
     final aut = db.doc(author.id).collection('chats');
-    whoom.doc('chat_users').update({
-      "users": FieldValue.arrayUnion([author.toMap()])
-    });
-    aut.doc('chat_users').update({
-      "users": FieldValue.arrayUnion([user.toMap()])
-    });
+    whoom
+        .doc('chat_users')
+        .set(author.toMapForUsers(), SetOptions(merge: true));
+    aut.doc('chat_users').set(user.toMapForUsers(), SetOptions(merge: true));
   }
 }

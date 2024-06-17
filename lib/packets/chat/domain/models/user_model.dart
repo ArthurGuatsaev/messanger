@@ -8,15 +8,13 @@ class UserModel {
   final String id;
   final String name;
   final String lastName;
+  final Color avatarColor;
   UserModel({
     required this.id,
     required this.name,
     required this.lastName,
-  });
-  Color get avatarColor {
-    final rand = Random().nextInt(255);
-    return Color.fromRGBO(rand, rand, rand, 0);
-  }
+  }) : avatarColor = Color.fromRGBO(Random().nextInt(255),
+            Random().nextInt(255), Random().nextInt(255), 1);
 
   String get avatarName => '${name.substring(0, 1)}${lastName.substring(0, 1)}';
 
@@ -37,6 +35,16 @@ class UserModel {
       'id': id,
       'name': name,
       'lastName': lastName,
+    };
+  }
+
+  Map<String, dynamic> toMapForUsers() {
+    return <String, dynamic>{
+      id: {
+        'id': id,
+        'name': name,
+        'lastName': lastName,
+      }
     };
   }
 

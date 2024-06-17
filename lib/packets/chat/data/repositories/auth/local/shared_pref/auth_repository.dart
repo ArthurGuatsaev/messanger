@@ -13,7 +13,7 @@ class SharedAuthRepository extends BaseAuthRepository {
   Future<void> getUser() async {
     final data = (await shared).getString('saved_user')?.split('_');
     if (data == null) return;
-    user = UserModel(id: data.last, name: data.first, lastName: data[2]);
+    user = UserModel(id: data.last, name: data.first, lastName: data[1]);
   }
 
   @override

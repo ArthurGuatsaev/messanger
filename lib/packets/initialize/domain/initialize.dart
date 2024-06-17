@@ -25,6 +25,7 @@ final Map<String, _InitializationStep> _initializationSteps =
     BaseAuthRepository authR = SharedAuthRepository();
     if (isT == true) authR = MocAuthRepository();
     authR.errorController = errorController;
+    // (await SharedPreferences.getInstance()).remove('saved_user');
     await authR.getUser();
     dependencies.aR = authR;
   },
@@ -32,8 +33,8 @@ final Map<String, _InitializationStep> _initializationSteps =
     BaseUserRepository userR = FirebaseUserRepository();
     if (isT == true) return;
     final authR = dependencies.aR;
-    userR.myId = authR.user?.id;
-    if (authR.user != null) userR.getMyUsers();
+    userR.me = authR.user;
+    if (authR.user != null) userR.setChatUserStream();
     dependencies.uR = userR;
   },
   'Chats initialization': (dependencies, isT) async {

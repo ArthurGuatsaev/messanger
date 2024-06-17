@@ -16,28 +16,27 @@ class FirebaseChatRepository extends BaseChatRepository {
     final docUser = db.doc(user.id).collection('chats').doc(author.id);
     final aut = db.doc(author.id).collection('chats').doc(user.id);
     [docUser, aut].map((e) async {
-      await e.update({
-        "messages": FieldValue.arrayUnion([mess.toMap()])
-      }).onError((error, stackTrace) => errorController?.add(111));
+      await e.set(mess.toFBMap(), SetOptions(merge: true));
     }).toList();
   }
 
   @override
-  Future<void> resieveMessage(
-      List<String> users, String id, Map<String, UserModel> allUsers) async {
+  Future<void> resieveMessage(List<UserModel> users, String id) async {
     final collection = db.doc(id).collection('chats');
     Map<String, Stream<List<MessageModel>>> res = {};
     for (var i in users) {
-      final user = allUsers[i];
-      final value = collection.doc(user?.id).snapshots().transform(
-              StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
-                  List<MessageModel>>.fromHandlers(
-            handleData: (data, sink) => sink.add(
-                (data.data() as List<Map<String, dynamic>>)
-                    .map((e) => MessageModel.fromMap(e))
-                    .toList()),
-          ));
-      res['${user?.name} ${user?.lastName}'] = value;
+      final value = collection.doc(i.id).snapshots().transform(
+          StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
+              List<MessageModel>>.fromHandlers(
+        handleData: (data, sink) {
+          if (data.data() != null) {
+            final mess =
+                MessageModel.fromFBToList(data.data() as Map<String, dynamic>);
+            sink.add(mess.values.toList());
+          }
+        },
+      ));
+      res[i.id] = value;
     }
     myChats = res;
   }

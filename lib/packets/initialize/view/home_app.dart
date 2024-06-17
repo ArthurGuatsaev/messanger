@@ -11,7 +11,7 @@ class MyHomeApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => AuthBloc(userR: dp!.aR),
+          create: (context) => AuthBloc(authR: dp!.aR, userR: dp.uR),
           lazy: false,
         ),
         BlocProvider(

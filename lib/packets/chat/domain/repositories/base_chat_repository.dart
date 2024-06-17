@@ -7,6 +7,5 @@ abstract class BaseChatRepository {
   StreamController<int>? errorController;
   Map<String, Stream<List<MessageModel>>>? myChats;
   Future<void> sentMessage(UserModel user, UserModel author, MessageModel mess);
-  Future<void> resieveMessage(
-      List<String> users, String id, Map<String, UserModel> allUsers);
+  Future<void> resieveMessage(List<UserModel> users, String id);
 }
