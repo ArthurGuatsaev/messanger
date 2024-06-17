@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../packets/chat/domain/models/message_model.dart';
-import '../../../../packets/chat/domain/models/user_model.dart';
+import '../../../../packets/chat/domain/models/message/message_model.dart';
+import '../../../../packets/chat/domain/models/user/user_model.dart';
 import 'chat_item.dart';
 
 class UserChats extends StatelessWidget {
@@ -21,7 +21,8 @@ class UserChats extends StatelessWidget {
       itemBuilder: (context, index) {
         final id = chats.keys.toList()[index];
         final user = chatUsers[id];
-        return UserChatBox(user: user);
+        final lastMessage = chats[id]?.last;
+        return UserChatBox(user: user, message: lastMessage);
       },
     );
   }

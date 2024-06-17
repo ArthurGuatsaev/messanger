@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:messanger/packets/chat/domain/models/message_model.dart';
-import 'package:messanger/packets/chat/domain/models/user_model.dart';
+import 'package:messanger/packets/chat/domain/models/message/message_model.dart';
+import 'package:messanger/packets/chat/domain/models/user/user_model.dart';
 
 abstract class BaseChatRepository {
   StreamController<int>? errorController;

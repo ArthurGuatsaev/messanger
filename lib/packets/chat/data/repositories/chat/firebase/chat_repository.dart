@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:messanger/packets/chat/domain/repositories/base_chat_repository.dart';
-import 'package:messanger/packets/chat/domain/models/message_model.dart';
-import 'package:messanger/packets/chat/domain/models/user_model.dart';
+import 'package:messanger/packets/chat/domain/models/message/message_model.dart';
+import 'package:messanger/packets/chat/domain/models/user/user_model.dart';
 
 class FirebaseChatRepository extends BaseChatRepository {
   final db = FirebaseFirestore.instance.collection('users');

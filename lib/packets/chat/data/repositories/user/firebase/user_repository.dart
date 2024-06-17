@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:messanger/packets/chat/domain/models/user_model.dart';
+import 'package:messanger/packets/chat/domain/models/user/user_model.dart';
 import 'package:messanger/packets/chat/domain/repositories/base_user_repository.dart';
 
 class FirebaseUserRepository extends BaseUserRepository {

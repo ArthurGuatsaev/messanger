@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:messanger/packets/chat/domain/models/message_model.dart';
-import 'package:messanger/packets/chat/domain/models/user_model.dart';
+import 'package:messanger/packets/chat/domain/models/message/message_model.dart';
+import 'package:messanger/packets/chat/domain/models/user/user_model.dart';
 import 'package:messanger/packets/chat/domain/repositories/base_chat_repository.dart';
 import 'package:messanger/packets/chat/domain/repositories/base_user_repository.dart';
 

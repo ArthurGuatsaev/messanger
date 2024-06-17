@@ -1,4 +1,4 @@
-import 'package:messanger/packets/chat/domain/models/user_model.dart';
+import 'package:messanger/packets/chat/domain/models/user/user_model.dart';
 import 'package:messanger/packets/chat/domain/repositories/base_auth_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

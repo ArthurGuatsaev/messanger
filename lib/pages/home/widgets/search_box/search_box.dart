@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../packets/chat/domain/models/user_model.dart';
+import 'package:messanger/const/extension.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../packets/chat/domain/models/user/user_model.dart';
 import 'search_textfield.dart';
 import 'search_users.dart';
 
@@ -13,15 +15,18 @@ class SearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints.loose(const Size(double.infinity, 300)),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SearchTextField(),
-          Expanded(child: SearchUsers(allUsers: allUsers)),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Align(
+            alignment: Alignment.topLeft,
+            child: Text(AppLocalizations.of(context)!.chats,
+                style: context.text.title
+                    .copyWith(color: context.color.textTitleLarge))),
+        const SizedBox(height: 8),
+        const SearchTextField(),
+        if (allUsers.isNotEmpty) SearchUsers(allUsers: allUsers),
+      ],
     );
   }
 }

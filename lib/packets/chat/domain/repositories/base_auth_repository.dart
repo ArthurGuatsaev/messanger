@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:messanger/packets/chat/domain/models/user_model.dart';
+import 'package:messanger/packets/chat/domain/models/user/user_model.dart';
 
 abstract class BaseAuthRepository {
   StreamController<int>? errorController;

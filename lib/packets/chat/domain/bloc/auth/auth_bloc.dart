@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:messanger/packets/chat/domain/models/user_model.dart';
+import 'package:messanger/packets/chat/domain/models/user/user_model.dart';
 import 'package:messanger/packets/chat/domain/repositories/base_auth_repository.dart';
 import 'package:messanger/packets/chat/domain/repositories/base_user_repository.dart';
 
