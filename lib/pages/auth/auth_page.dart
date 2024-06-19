@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:messanger/const/extension.dart';
 import 'package:messanger/packets/chat/domain/bloc/auth/auth_bloc.dart';
 import 'package:messanger/packets/chat/domain/bloc/chat/chat_bloc.dart';
 import 'package:messanger/packets/navigation/router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:messanger/packets/themes/src/extenshion/extenshion.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});

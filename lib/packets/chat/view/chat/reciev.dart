@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:messanger/const/extension.dart';
 import 'package:messanger/packets/chat/domain/models/message/extentions/date.dart';
+import 'package:messanger/packets/themes/src/extenshion/extenshion.dart';
 
 import '../../domain/models/message/message_model.dart';
 import 'painter.dart';

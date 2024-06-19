@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:messanger/const/extension.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:messanger/packets/themes/src/extenshion/extenshion.dart';
 import '../../../../packets/chat/domain/models/user/user_model.dart';
 import '../../../widgets/user_avatar.dart';
 

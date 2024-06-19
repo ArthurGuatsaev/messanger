@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:messanger/const/extension.dart';
-import 'package:messanger/packets/chat/domain/models/message/extentions/date.dart';
 import '/packets/chat/domain/models/message/message_model.dart';
 
 import 'message_date.dart';

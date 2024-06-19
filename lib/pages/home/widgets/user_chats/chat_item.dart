@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:messanger/const/extension.dart';
 import 'package:messanger/packets/chat/domain/models/message/extentions/date.dart';
 import 'package:messanger/packets/chat/domain/models/message/message_model.dart';
 import 'package:messanger/packets/navigation/router.dart';
+import 'package:messanger/packets/themes/src/extenshion/extenshion.dart';
 
 import '../../../../packets/chat/domain/models/user/user_model.dart';
 import '../../../widgets/user_avatar.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:messanger/const/extension.dart';
+import 'package:messanger/packets/themes/src/extenshion/extenshion.dart';
 import 'package:messanger/pages/widgets/user_avatar.dart';
 
 import '../../../../packets/chat/domain/models/user/user_model.dart';
