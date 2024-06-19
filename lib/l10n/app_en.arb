@@ -1,5 +1,7 @@
 {
   "chats": "Chats",
   "search" : "Search",
-  "online": "Online"
+  "online": "Online",
+  "message": "Message",
+  "submit" : "Submit"
 }

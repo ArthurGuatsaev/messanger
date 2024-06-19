@@ -18,14 +18,20 @@ class PhoneHome extends StatelessWidget {
           final chats = state.chats;
           final allUsers = state.allUsers;
           return SafeArea(
-            minimum: const EdgeInsets.only(left: 12, right: 12, top: 40),
+            minimum: const EdgeInsets.only(top: 40, right: 12, left: 12),
             child: Stack(
               children: [
-                CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(child: SearchBox(allUsers: allUsers)),
-                    UserChats(chats: chats, allUsr: allUsers),
-                  ],
+                RefreshIndicator.adaptive(
+                  onRefresh: () {
+                    context.read<ChatBloc>().add(SetAllUsers(refresh: true));
+                    return Future.sync(() => 3);
+                  },
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(child: SearchBox(allUsers: allUsers)),
+                      UserChats(chats: chats, allUsr: allUsers),
+                    ],
+                  ),
                 ),
               ],
             ),

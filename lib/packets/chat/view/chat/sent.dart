@@ -51,7 +51,7 @@ class SentMessage extends StatelessWidget {
                       ),
                       const SizedBox(width: 20),
                       Text(
-                        message.view,
+                        message.time,
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall

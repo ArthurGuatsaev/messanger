@@ -24,37 +24,40 @@ class PhoneChat extends StatelessWidget {
         title: AppbarTitle(us: us),
       ),
       body: SafeArea(
-          minimum: const EdgeInsets.symmetric(horizontal: 12),
           child: Stack(
-            children: [
-              BlocBuilder<ChatBloc, ChatState>(
-                builder: (context, state) {
-                  final chats = state.chats[us.id];
-                  if (chats?.isEmpty == true || chats == null) {
-                    return const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('no message'),
-                      ],
-                    );
-                  }
-                  return CustomScrollView(
-                    slivers: [
-                      SliverList.builder(
-                        itemCount: chats.length,
-                        itemBuilder: (context, index) {
-                          final mess = chats[index];
-                          return ChatMessage(
-                              message: mess, mine: us.id != mess.author.id);
-                        },
-                      )
+        children: [
+          BlocBuilder<ChatBloc, ChatState>(
+            builder: (context, state) {
+              final chats = state.chats[us.id];
+              if (chats?.isEmpty == true || chats == null) {
+                return const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('no messages'),
                     ],
-                  );
-                },
-              ),
-              SendMessageBox(user: user)
-            ],
-          )),
+                  ),
+                );
+              }
+              return CustomScrollView(
+                slivers: [
+                  SliverList.builder(
+                    itemCount: chats.length,
+                    itemBuilder: (context, index) {
+                      final mess = chats[index];
+                      return ChatMessage(
+                          lastDate: index != 0 ? chats[index - 1].date : null,
+                          message: mess,
+                          mine: us.id != mess.author.id);
+                    },
+                  )
+                ],
+              );
+            },
+          ),
+          SendMessageBox(user: user)
+        ],
+      )),
     );
   }
 }

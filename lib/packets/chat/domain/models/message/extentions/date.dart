@@ -31,4 +31,13 @@ extension DateViews on MessageModel {
         date.month.toString().length < 2 ? '0${date.month}' : '${date.month}';
     return '$d-$m-${date.year}';
   }
+
+  String get time {
+    final h =
+        date.hour.toString().length < 2 ? '0${date.hour}' : '${date.hour}';
+    final m = date.minute.toString().length < 2
+        ? '0${date.minute}'
+        : '${date.minute}';
+    return '$h:$m';
+  }
 }

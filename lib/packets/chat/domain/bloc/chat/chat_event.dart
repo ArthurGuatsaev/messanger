@@ -26,7 +26,7 @@ class AddUserEvent extends ChatEvent {
 }
 
 class SetAllUsers extends ChatEvent {
-  final bool? empty;
+  final bool? refresh;
 
-  SetAllUsers({this.empty});
+  SetAllUsers({this.refresh});
 }

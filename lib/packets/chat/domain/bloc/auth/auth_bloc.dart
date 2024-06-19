@@ -17,10 +17,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SetUserEvent>(setUser);
   }
   setUser(SetUserEvent event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(status: UserStatus.loading));
     await _authR.setUser(event.name, event.lastName);
     await _authR.getUser();
-    if (_authR.user != null) await _userR.addUser(_authR.user!);
+    if (_authR.user == null) {
+      emit(state.copyWith(status: UserStatus.non));
+      return;
+    }
+    await _userR.addUser(_authR.user!);
     _userR.me = _authR.user;
-    emit(state.copyWith(user: _authR.user));
+    emit(state.copyWith(user: _authR.user, status: UserStatus.success));
   }
 }

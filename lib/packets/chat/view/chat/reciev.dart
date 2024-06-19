@@ -12,8 +12,10 @@ class RecievMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        CustomPaint(painter: MyMessagePainter(context.color.sentMessage)),
         Flexible(
           child: Container(
             decoration: BoxDecoration(
@@ -25,9 +27,11 @@ class RecievMessage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             margin: const EdgeInsets.only(top: 20, left: 70),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 if (message.text != null)
                   Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         message.text!,
@@ -38,7 +42,7 @@ class RecievMessage extends StatelessWidget {
                       ),
                       const SizedBox(width: 20),
                       Text(
-                        message.view,
+                        message.time,
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall
@@ -52,6 +56,7 @@ class RecievMessage extends StatelessWidget {
             ),
           ),
         ),
+        CustomPaint(painter: MyMessagePainter(context.color.recieveMessage)),
       ],
     );
   }

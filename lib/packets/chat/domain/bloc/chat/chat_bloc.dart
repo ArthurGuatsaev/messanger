@@ -70,11 +70,17 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   getAllUsers(SetAllUsers event, Emitter<ChatState> emit) async {
     var usr = _userR.allUsers;
     usr ??= await _userR.getAllUsers();
+    if (event.refresh == true) usr = await _userR.getAllUsers();
     emit(state.copyWith(allUsers: usr));
   }
 
   initUpdateStream(InitUpdateStreamEvent event, Emitter<ChatState> emit) async {
     _chatR.initUpdateStream(_userR.me!.id);
+    updateSubscription = _chatR.needUpdateStream?.listen(
+      (event) async {
+        add(RecieveLastMessageEvent(id: event));
+      },
+    );
   }
 
   @override

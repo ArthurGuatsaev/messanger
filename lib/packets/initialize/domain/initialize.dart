@@ -25,7 +25,7 @@ final Map<String, _InitializationStep> _initializationSteps =
     BaseAuthRepository authR = SharedAuthRepository();
     if (isT == true) authR = MocAuthRepository();
     authR.errorController = errorController;
-    // (await SharedPreferences.getInstance()).remove('saved_user');
+    (await SharedPreferences.getInstance()).remove('saved_user');
     await authR.getUser();
     dependencies.aR = authR;
   },
