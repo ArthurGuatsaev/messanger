@@ -20,6 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     await _authR.setUser(event.name, event.lastName);
     await _authR.getUser();
     if (_authR.user != null) await _userR.addUser(_authR.user!);
+    _userR.me = _authR.user;
     emit(state.copyWith(user: _authR.user));
   }
 }

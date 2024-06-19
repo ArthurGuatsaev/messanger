@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:messanger/const/extension.dart';
-
-import '../../../../packets/chat/domain/bloc/chat/chat_bloc.dart';
 
 class SearchTextField extends StatelessWidget {
   const SearchTextField({super.key});
@@ -24,10 +21,13 @@ class SearchTextField extends StatelessWidget {
             contentPadding: const EdgeInsets.all(0),
             border: const OutlineInputBorder(borderSide: BorderSide.none)),
         onTapOutside: (event) {
-          FocusScope.of(context).unfocus();
-          context.read<ChatBloc>().add(SetAllUsers(empty: true));
+          // print(
+          //     '${event.buttons}, ${event.distanceMax}, ${event.embedderId}, ${event.radiusMax}');
+          // if (event.distanceMin < 10) return;
+          // FocusScope.of(context).unfocus();
+          // context.read<ChatBloc>().add(SetAllUsers(empty: true));
         },
-        onTap: () => context.read<ChatBloc>().add(SetAllUsers()),
+        // onTap: () => context.read<ChatBloc>().add(SetAllUsers()),
         onChanged: (value) {},
       ),
     );

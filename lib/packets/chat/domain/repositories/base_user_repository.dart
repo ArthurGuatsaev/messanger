@@ -2,9 +2,10 @@ import '../models/user/user_model.dart';
 
 abstract class BaseUserRepository {
   UserModel? me;
+  Map<String, UserModel>? allUsers;
   Stream<Map<String, UserModel>>? myUsers;
   Future<void> addUser(UserModel user);
-  void setChatUserStream();
   Future<Map<String, UserModel>> getAllUsers();
-  Future<void> saveChatUser(UserModel user, UserModel author);
+  Future<void> setUpdateEvent(
+      UserModel user, UserModel author, String messageId);
 }

@@ -20,6 +20,7 @@ class UserChatBox extends StatelessWidget {
   final MessageModel? message;
 
   Widget _buildLastMessage(BuildContext context) {
+    if (message == null) return const SizedBox(height: 10);
     if (message?.text != null) {
       return UserLastMessage(message: message, user: user);
     } else {
@@ -57,11 +58,12 @@ class UserChatBox extends StatelessWidget {
                 ],
               ),
             ),
-            Text(message!.view,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall
-                    ?.copyWith(color: context.color.commentColor))
+            if (message != null)
+              Text(message!.view,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(color: context.color.commentColor))
           ],
         ),
       ),

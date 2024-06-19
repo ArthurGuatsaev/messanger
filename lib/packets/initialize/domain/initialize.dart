@@ -34,14 +34,16 @@ final Map<String, _InitializationStep> _initializationSteps =
     if (isT == true) return;
     final authR = dependencies.aR;
     userR.me = authR.user;
-    if (authR.user != null) userR.setChatUserStream();
+    await userR.getAllUsers();
     dependencies.uR = userR;
   },
   'Chats initialization': (dependencies, isT) async {
     BaseChatRepository chatsR = FirebaseChatRepository();
     if (isT == true) return;
     final userR = dependencies.aR;
+    if (userR.user != null) chatsR.initUpdateStream(userR.user!.id);
     chatsR.errorController = userR.errorController;
+    if (userR.user != null) chatsR.resieveChat(userR.user!.id);
     dependencies.cR = chatsR;
   },
   'navigation': (dependencies, isT) {

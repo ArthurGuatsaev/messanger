@@ -3,7 +3,6 @@ import 'package:messanger/const/extension.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../packets/chat/domain/models/user/user_model.dart';
 import 'search_textfield.dart';
-import 'search_users.dart';
 
 class SearchBox extends StatelessWidget {
   const SearchBox({
@@ -25,7 +24,7 @@ class SearchBox extends StatelessWidget {
                     .copyWith(color: context.color.textTitleLarge))),
         const SizedBox(height: 8),
         const SearchTextField(),
-        if (allUsers.isNotEmpty) SearchUsers(allUsers: allUsers),
+        // if (allUsers.isNotEmpty) SearchUsers(allUsers: allUsers),
       ],
     );
   }

@@ -8,19 +8,19 @@ class UserChats extends StatelessWidget {
   const UserChats({
     super.key,
     required this.chats,
-    required this.chatUsers,
+    required this.allUsr,
   });
 
   final Map<String, List<MessageModel>> chats;
-  final Map<String, UserModel> chatUsers;
+  final Map<String, UserModel> allUsr;
 
   @override
   Widget build(BuildContext context) {
     return SliverList.builder(
-      itemCount: chats.length,
+      itemCount: allUsr.length,
       itemBuilder: (context, index) {
-        final id = chats.keys.toList()[index];
-        final user = chatUsers[id];
+        final id = allUsr.keys.toList()[index];
+        final user = allUsr[id];
         final lastMessage = chats[id]?.last;
         return UserChatBox(user: user, message: lastMessage);
       },

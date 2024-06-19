@@ -11,6 +11,7 @@ import 'package:messanger/packets/chat/domain/bloc/auth/auth_bloc.dart';
 import 'package:messanger/packets/chat/domain/repositories/base_chat_repository.dart';
 import 'package:messanger/packets/chat/domain/repositories/base_auth_repository.dart';
 import 'package:messanger/packets/chat/domain/repositories/base_user_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../firebase_options.dart';
 import '../chat/data/repositories/auth/local/shared_pref/auth_repository.dart';
 import '../navigation/router.dart';

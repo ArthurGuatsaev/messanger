@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:messanger/packets/chat/domain/models/message/message_model.dart';
@@ -12,59 +13,74 @@ part 'chat_state.dart';
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final BaseChatRepository _chatR;
   final BaseUserRepository _userR;
-  StreamSubscription? subscription;
+  StreamSubscription? updateSubscription;
+  StreamSubscription? chatSubscription;
   ChatBloc(
       {required BaseChatRepository chatR, required BaseUserRepository userR})
       : _chatR = chatR,
         _userR = userR,
         super(ChatState()) {
-    subscription = _userR.myUsers?.listen(
+    updateSubscription = _chatR.needUpdateStream?.listen(
       (event) async {
-        _chatR.resieveMessage(event.values.toList(), _userR.me!.id);
-        add(RecieveMessageEvent(users: event));
+        log('$event');
+        add(RecieveLastMessageEvent(id: event));
       },
     );
     on<SentMessageEvent>(sentMessage);
-    on<RecieveMessageEvent>(recievMessage);
-    on<AddUserEvent>(addUser);
+    on<RecieveLastMessageEvent>(recievLastMessage);
     on<SetAllUsers>(getAllUsers);
+    on<InitUpdateStreamEvent>(initUpdateStream);
+    on<RecievChatsEvent>(recievChats);
+    add(RecievChatsEvent());
+    add(SetAllUsers());
   }
   sentMessage(SentMessageEvent event, Emitter<ChatState> emit) async {
     final date = DateTime.now();
-    final message = MessageModel(
-        date: date, author: _userR.me!, id: '${date.millisecondsSinceEpoch}');
+    final id = '${date.millisecondsSinceEpoch}';
+    final message = MessageModel(date: date, author: _userR.me!, id: id);
     if (event.text != null) message.text = event.text;
     await _chatR.sentMessage(
         UserModel.fromMap(event.user!), _userR.me!, message);
-    await _userR.saveChatUser(UserModel.fromMap(event.user!), _userR.me!);
+    await _userR.setUpdateEvent(UserModel.fromMap(event.user!), _userR.me!, id);
   }
 
-  recievMessage(RecieveMessageEvent event, Emitter<ChatState> emit) async {
-    emit(state.copyWith(chatUsers: event.users));
-    for (var stream in _chatR.myChats!.entries) {
-      return await emit.forEach(stream.value, onData: (data) {
-        final chat = {...state.chats};
-        chat[stream.key] = data;
-        return state.copyWith(chats: chat);
-      });
-    }
+  recievLastMessage(
+      RecieveLastMessageEvent event, Emitter<ChatState> emit) async {
+    final messageId = event.id.split('_').last;
+    final userId = event.id.split('_').first;
+    final message =
+        await _chatR.resieveLastMessage(_userR.me!.id, userId, messageId);
+    await _chatR.removeUpdateEvent(_userR.me!, event.id);
+    final chat = {...state.chats};
+    var messages = <MessageModel>[];
+    if (chat[userId] != null) messages = chat[userId]!;
+    messages.add(message);
+    chat[userId] = messages;
+    emit(state.copyWith(chats: chat));
+    add(SetAllUsers());
   }
 
-  addUser(AddUserEvent event, Emitter<ChatState> emit) async {
-    await _userR.addUser(event.user);
-    _userR.setChatUserStream();
+  recievChats(RecievChatsEvent event, Emitter<ChatState> emit) async {
+    if (_userR.me == null) return;
+    var chat = _chatR.chat;
+    chat ??= await _chatR.resieveChat(_userR.me!.id);
+    emit(state.copyWith(chats: chat));
   }
 
   getAllUsers(SetAllUsers event, Emitter<ChatState> emit) async {
-    if (event.empty == true) return emit(state.copyWith(allUsers: {}));
-    if (state.allUsers.isNotEmpty) return;
-    final users = await _userR.getAllUsers();
-    emit(state.copyWith(allUsers: users));
+    var usr = _userR.allUsers;
+    usr ??= await _userR.getAllUsers();
+    emit(state.copyWith(allUsers: usr));
+  }
+
+  initUpdateStream(InitUpdateStreamEvent event, Emitter<ChatState> emit) async {
+    _chatR.initUpdateStream(_userR.me!.id);
   }
 
   @override
   Future<void> close() {
-    subscription?.cancel();
+    updateSubscription?.cancel();
+    chatSubscription?.cancel();
     return super.close();
   }
 }

@@ -9,11 +9,15 @@ class SentMessageEvent extends ChatEvent {
   SentMessageEvent({this.text, required this.user});
 }
 
-class RecieveMessageEvent extends ChatEvent {
-  final Map<String, UserModel> users;
+class RecieveLastMessageEvent extends ChatEvent {
+  final String id;
 
-  RecieveMessageEvent({required this.users});
+  RecieveLastMessageEvent({required this.id});
 }
+
+class RecievChatsEvent extends ChatEvent {}
+
+class InitUpdateStreamEvent extends ChatEvent {}
 
 class AddUserEvent extends ChatEvent {
   final UserModel user;

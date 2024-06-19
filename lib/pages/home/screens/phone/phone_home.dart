@@ -17,7 +17,6 @@ class PhoneHome extends StatelessWidget {
         builder: (context, state) {
           final chats = state.chats;
           final allUsers = state.allUsers;
-          final chatUsers = state.chatUsers;
           return SafeArea(
             minimum: const EdgeInsets.only(left: 12, right: 12, top: 40),
             child: Stack(
@@ -25,7 +24,7 @@ class PhoneHome extends StatelessWidget {
                 CustomScrollView(
                   slivers: [
                     SliverToBoxAdapter(child: SearchBox(allUsers: allUsers)),
-                    UserChats(chats: chats, chatUsers: chatUsers),
+                    UserChats(chats: chats, allUsr: allUsers),
                   ],
                 ),
               ],
